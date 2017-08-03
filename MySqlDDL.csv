@@ -1,0 +1,2 @@
+1, Creating Employee table, "DROP TABLE IF EXISTS Employee;", "CREATE TABLE Employee(name VARCHAR(20), EmployeeID INT, zipcode INT, PhoneNo BIGINT);", "DROP TABLE Employee;"
+2, Altering Employee table by adding EmployeeAge column, "CREATE TABLE IF NOT EXISTS Employee(name VARCHAR(20), EmployeeID INT, zipcode INT, PhoneNo BIGINT);", "ALTER TABLE Employee ADD COLUMN EmployeeAge INT;", "DROP TABLE Employee;"

@@ -1,0 +1,2 @@
+1, insert into employee table, "CREATE TABLE Employee (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(30) NOT NULL,department VARCHAR(20) NOT NULL, PRIMARY KEY (id));", "INSERT INTO Employee ( id, name, department) VALUES (1, 'Divya', 'CS');","DROP TABLE Employee;"
+2, insert into employee table1, "CREATE TABLE Employee (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(30) NOT NULL,department VARCHAR(20) NOT NULL, PRIMARY KEY (id));","INSERT INTO Employee ( id, name, department) VALUES (2, 'Meena', 'CS');","DROP TABLE Employee;"
