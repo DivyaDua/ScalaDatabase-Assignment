@@ -1,2 +1,2 @@
-1,  Creating Employee table, " CREATE TABLE Employee(name VARCHAR(20), EmployeeID INT, zipcode INT, PhoneNo BIGINT);", 298151593
-2,  Altering Employee table by adding EmployeeAge column, " ALTER TABLE Employee ADD COLUMN EmployeeAge INT;", 435817452
+1,  Creating Employee table, " CREATE TABLE Employee(name VARCHAR(20), EmployeeID INT, zipcode INT, PhoneNo BIGINT);", 260929436
+2,  Altering Employee table by adding EmployeeAge column, " ALTER TABLE Employee ADD COLUMN EmployeeAge INT;", 434351909
