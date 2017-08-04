@@ -4,8 +4,8 @@ import java.sql.{Connection, DriverManager, SQLException}
 
 object SQLiteConnect extends DatabaseConnect{
 
-  val driver = "org.sqlite.JDBC"
-  val url = "jdbc:sqlite:/home/knoldus/test.db"
+  override val driver = "org.sqlite.JDBC"
+  override val url = "jdbc:sqlite:/home/knoldus/test.db"
 
   override def connectToDatabase: Connection = {
     try {

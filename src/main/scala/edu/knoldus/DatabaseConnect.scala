@@ -1,11 +1,14 @@
 package edu.knoldus
 
 import java.sql.{Connection, DriverManager, SQLException, Statement}
+import org.apache.log4j.Logger
 
-trait DatabaseConnect {
+trait DatabaseConnect extends CSVFiles{
 
-  val driver: String
-  val url: String
+  override val logger: Logger = Logger.getLogger(this.getClass)
+
+  val driver: String = ""
+  val url: String = ""
   val username: String = ""
   val password: String = ""
 
@@ -22,8 +25,9 @@ trait DatabaseConnect {
     }
   }
 
- def executeQuery(connection: Connection, queryList: List[String]): Long = {
+ def executeQuery(queryList: List[String]): Long = {
 
+    val connection: Connection = connectToDatabase
     val statement: Statement = connection.createStatement()
 
     statement.execute(queryList(2))
@@ -33,18 +37,20 @@ trait DatabaseConnect {
     statement.execute(queryList(4))
     statement.close
 
+    closeConnection(connection)
+    logger.info(s"Execution of queries completed with time : ${end-start}")
     end - start
 
-    /*val resultSet = statement.executeQuery("SELECT host, user FROM user")
-    while ( resultSet.next() ) {
-      val host = resultSet.getString("host")
-      val user = resultSet.getString("user")
-      println("host, user = " + host + ", " + user)
-    }*/
   }
 
   def closeConnection(connection: Connection): Unit = {
     connection.close()
+  }
+
+  def executeQueries(filePath: String, outputFileName: String): Unit ={
+    val query: List[List[String]] = readAndParse(filePath)
+    val time: List[Long] = query.map(executeQuery)
+    writeToFile(query, time, outputFileName)
   }
 
 }

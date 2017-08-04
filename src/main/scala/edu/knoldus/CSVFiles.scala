@@ -1,23 +1,19 @@
 package edu.knoldus
 
 import java.io.{File, FileNotFoundException, PrintWriter}
-
 import org.apache.log4j.Logger
-
 import scala.io.Source
 
-object CSVFiles {
+trait CSVFiles {
 
-  //val logger: Logger = Logger.getLogger(this.getClass)
+  val logger: Logger = Logger.getLogger(this.getClass)
 
-  def readFile(file: String): List[String] ={
+  def readFile(filePath: String): List[String] ={
 
-    val source: File = new File(file)
+    val source: File = new File(filePath)
     val content: String = Source.fromFile(source).getLines.mkString("\n")
-
     val outputList = content.split("\n").toList
 
-    //logger.info(outputList)
     outputList
   }
 
@@ -54,10 +50,11 @@ object CSVFiles {
     parse(line, Nil, "", 0, 0)
   }
 
-  def readAndParse(file: String): List[List[String]] ={
+  def readAndParse(filePath: String): List[List[String]] ={
 
-    val lines: List[String] = readFile(file)
+    val lines: List[String] = readFile(filePath)
     val queryList: List[List[String]] = lines.map(l => parseCSV(l))
+    logger.info("Read and parse file execution successful")
     queryList
   }
 
@@ -78,6 +75,8 @@ object CSVFiles {
     try {
       writeToFile.write(outputList.mkString("\n"))
       writeToFile.close()
+      logger.info(s"write to file named $fileName")
+
       outputFilePath
     }
     catch {
@@ -109,6 +108,7 @@ object CSVFiles {
     try {
       writeToFile.write(outputList.mkString("\n"))
       writeToFile.close()
+      logger.info(s"Written combined output to file named: $outputFileName")
       outputFilePath
     }
     catch {

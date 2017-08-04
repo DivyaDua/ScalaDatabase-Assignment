@@ -16,5 +16,5 @@ libraryDependencies += "org.mockito" % "mockito-all" % "1.9.5" % "test"
 
 libraryDependencies += "log4j" % "log4j" % "1.2.17"
 
-
+coverageEnabled:=true
         
