@@ -1,17 +1,24 @@
 package edu.knoldus
 
-import java.io.{File, PrintWriter}
+import java.io.{File, FileNotFoundException, PrintWriter}
+
+import org.apache.log4j.Logger
 
 import scala.io.Source
 
 object CSVFiles {
+
+  //val logger: Logger = Logger.getLogger(this.getClass)
 
   def readFile(file: String): List[String] ={
 
     val source: File = new File(file)
     val content: String = Source.fromFile(source).getLines.mkString("\n")
 
-    content.split("\n").toList
+    val outputList = content.split("\n").toList
+
+    //logger.info(outputList)
+    outputList
   }
 
   def parseCSV(line: String): List[String] = {
@@ -54,7 +61,7 @@ object CSVFiles {
     queryList
   }
 
-  def writeToFile(content: List[List[String]], time: List[Long], fileName: String): Boolean = {
+  def writeToFile(content: List[List[String]], time: List[Long], fileName: String): String = {
 
     val testCaseId: List[String]  = content.map(_.head)
     val description: List[String] = content.map(_(1))
@@ -65,19 +72,20 @@ object CSVFiles {
       case (((a,b),c),d) => a + ", " + b + ", " + "\"" + c + "\", " + d
     }
 
-    val writeToFile = new PrintWriter("/home/knoldus/IdeaProjects/ScalaDatabase/" + fileName)
+    val outputFilePath = "/home/knoldus/IdeaProjects/ScalaDatabase/" + fileName
+    val writeToFile = new PrintWriter(outputFilePath)
 
     try {
       writeToFile.write(outputList.mkString("\n"))
       writeToFile.close()
-      true
+      outputFilePath
     }
     catch {
-      case e: Exception => false
+      case e: Exception => throw new FileNotFoundException
     }
   }
 
-  def writeCombinedFile(mySQLFile: String, postgresFile: String, SQLiteFile: String, output: String) = {
+  def writeCombinedOutputFile(mySQLFile: String, postgresFile: String, SQLiteFile: String, outputFileName: String): String = {
 
     val mysqlContent: List[List[String]] = readAndParse(mySQLFile)
     val postgresContent: List[List[String]] = readAndParse(postgresFile)
@@ -95,21 +103,17 @@ object CSVFiles {
       case ((((a,b),c),d),e) => a + ", " + b + ", " + c + ", " + d + ", " + e
     }
 
-    val writeToFile = new PrintWriter("/home/knoldus/IdeaProjects/ScalaDatabase/" + output)
+    val outputFilePath = "/home/knoldus/IdeaProjects/ScalaDatabase/" + outputFileName
+    val writeToFile = new PrintWriter(outputFilePath)
 
     try {
       writeToFile.write(outputList.mkString("\n"))
       writeToFile.close()
-      true
+      outputFilePath
     }
     catch {
-      case e: Exception => false
+      case e: Exception => throw new FileNotFoundException
     }
-
-
-
-
-
   }
 
 

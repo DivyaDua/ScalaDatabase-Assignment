@@ -8,6 +8,7 @@ object Main extends App{
   MySqlConnect.closeConnection(connection)
   CSVFiles.writeToFile(query, time, "MySQLDDLoutput.csv")
 
+
   val query1 = CSVFiles.readAndParse("/home/knoldus/IdeaProjects/ScalaDatabase/MySqlDML.csv")
   val connection1 = MySqlConnect.connectToDatabase
   val time1: List[Long] = query1.map(MySqlConnect.executeQuery(connection1, _))
@@ -26,6 +27,6 @@ object Main extends App{
   SQLiteConnect.closeConnection(connection2)
   CSVFiles.writeToFile(query3, time3, "SQLiteDDLoutput.csv")
 
-  CSVFiles.writeCombinedFile("/home/knoldus/IdeaProjects/ScalaDatabase/MySQLDDLoutput.csv", "/home/knoldus/IdeaProjects/ScalaDatabase/postDDLoutput.csv", "/home/knoldus/IdeaProjects/ScalaDatabase/SQLiteDDLoutput.csv", "Output.csv")
+  print(CSVFiles.writeCombinedOutputFile("/home/knoldus/IdeaProjects/ScalaDatabase/MySQLDDLoutput.csv", "/home/knoldus/IdeaProjects/ScalaDatabase/postDDLoutput.csv", "/home/knoldus/IdeaProjects/ScalaDatabase/SQLiteDDLoutput.csv", "Output.csv"))
 
 }
